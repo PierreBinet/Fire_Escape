@@ -30,8 +30,6 @@ def parser_data(path):
                 last_node = next_node
             list_sites.append(site)
 
-        print(needed_edges)
-
         # print(needed_edges)
 
         print(list_sites)
