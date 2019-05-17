@@ -1,19 +1,14 @@
 import parser
+import bornes
 import os.path
-
-
-def find_edge(last_node, next_node, list_edges):
-    for edge in list_edges:
-        if ([edge["node_src"], edge["node_dst"]] == [last_node, next_node]) or \
-          ([edge["node_dst"], edge["node_src"]] == [last_node, next_node]):
-            return edge
-
 
 path = './InstancesInt/example.full'
 number_of_sites, list_sites, safe_node_id, number_of_edges, list_edges = parser.parser_data\
                                                                     (path)
 
 filename = os.path.basename(path)
+
+borne = bornes.borne_inf(list_sites, list_edges)
 
 # create a file with the following functions
 
