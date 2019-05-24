@@ -11,7 +11,7 @@ def parser_data(path):
         # print("number of sites : "+str(number_of_sites))
         # print("safe node id : "+str(safe_node_id))
 
-        list_sites = []  # creation of a list to put sites in
+        list_sites = {}  # creation of a list to put sites in
 
         needed_edges = []
 
@@ -28,11 +28,11 @@ def parser_data(path):
                 if direct_path not in needed_edges:
                     needed_edges.append(direct_path)
                 last_node = next_node
-            list_sites.append(site)
+            list_sites[str(site["id"])] = site
 
         # print(needed_edges)
 
-        print(list_sites)
+        # print(list_sites)
 
         next(fp)  # line ignored (comment)
         line = fp.readline()
@@ -40,17 +40,28 @@ def parser_data(path):
         tab = line.split(' ')
         number_of_edges = int(tab[1])
 
-        list_edges = []
+        list_edges = {}
 
         for i in range(number_of_edges):
             line = fp.readline()
             tab = line.split(' ')
-            edge = {"node_src": int(tab[0]), "node_dst": int(tab[1]), "due_date": int(tab[2]), "length": int(tab[3]),
-                    "capacity": int(tab[4])}
-            if ([edge["node_src"], edge["node_dst"]] in needed_edges) or ([edge["node_dst"], edge["node_src"]] in
-                                                                          needed_edges):
-                list_edges.append(edge)
+            parent = []
 
-        print(list_edges)
+            if [int(tab[0]), int(tab[1])] in needed_edges:
+                edge = {"node_src": int(tab[0]), "node_dst": int(tab[1]), "due_date": int(tab[2]),
+                        "length": int(tab[3]),
+                        "capacity": int(tab[4]), "parent": parent}
+                list_edges[str(edge["node_src"])] = edge
+            elif [int(tab[1]), int(tab[0])] in needed_edges:
+                edge = {"node_src": int(tab[1]), "node_dst": int(tab[0]), "due_date": int(tab[2]),
+                        "length": int(tab[3]),
+                        "capacity": int(tab[4]), "parent": parent}
+                list_edges[str(edge["node_src"])] = edge
+
+        for edge in list_edges:  # parent assignments
+            if list_edges[edge]["node_dst"] != safe_node_id:
+                list_edges[str(list_edges[edge]["node_dst"])]["parent"].append(list_edges[edge]["node_src"])
+
+        # print(list_edges)
 
         return number_of_sites, list_sites, safe_node_id, number_of_edges, list_edges
