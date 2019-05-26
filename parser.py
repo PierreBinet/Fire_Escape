@@ -39,6 +39,7 @@ def parser_data(path):
 
         tab = line.split(' ')
         number_of_edges = int(tab[1])
+        useful_edges = 0
 
         list_edges = {}
 
@@ -49,14 +50,15 @@ def parser_data(path):
 
             if [int(tab[0]), int(tab[1])] in needed_edges:
                 edge = {"node_src": int(tab[0]), "node_dst": int(tab[1]), "due_date": int(tab[2]),
-                        "length": int(tab[3]),
-                        "capacity": int(tab[4]), "parent": parent}
+                        "length": int(tab[3]), "capacity": int(tab[4]), "parent": parent, "checked_?": False}
                 list_edges[str(edge["node_src"])] = edge
+                useful_edges += 1
+
             elif [int(tab[1]), int(tab[0])] in needed_edges:
                 edge = {"node_src": int(tab[1]), "node_dst": int(tab[0]), "due_date": int(tab[2]),
-                        "length": int(tab[3]),
-                        "capacity": int(tab[4]), "parent": parent}
+                        "length": int(tab[3]), "capacity": int(tab[4]), "parent": parent, "checked_?": False}
                 list_edges[str(edge["node_src"])] = edge
+                useful_edges += 1
 
         for edge in list_edges:  # parent assignments
             if list_edges[edge]["node_dst"] != safe_node_id:
@@ -64,4 +66,4 @@ def parser_data(path):
 
         # print(list_edges)
 
-        return number_of_sites, list_sites, safe_node_id, number_of_edges, list_edges
+        return number_of_sites, list_sites, safe_node_id, useful_edges, list_edges

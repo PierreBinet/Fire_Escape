@@ -32,18 +32,24 @@ for site in list_sites:
     list_sites[site]["evacuation_start_date"] = 0
 
 # Checking the validness of a solution
-valid = solution_checker.solution_is_valid(number_of_sites, list_sites, safe_node_id, number_of_edges, list_edges)
+valid = solution_checker.solution_is_valid(list_sites, list_edges)
 
 
 # Printing the solution
 print("PRINTING THE SOLUTION")
-print("File : \""+filename+"\"\n")
-print("Number of sites found: "+str(number_of_sites))
-for site in list_sites:
-    print("Site "+str(list_sites[site]["id"])+": rate: start date: ")
-print("Number of edges found: "+str(number_of_edges))
+print("File : \""+filename+"\"")
 print("Is the solution found valid? "+str(valid))
-print("Evacuation total time : ")
+print("Evacuation total time : "+str(len(list_edges[str(number_of_edges)]["list_event"])))
 print("Computing time : ")
-print("Method used : personnal method")
+print("Method used : personal method\n")
+
+for edge in list_edges:
+    print("edge n°"+edge+": "+str(list_edges[edge]["list_event"]))
+
+
+# Useless for now, since we do not find our own solutions (yet)
+# print("Number of sites found: "+str(number_of_sites))
+# for site in list_sites:
+#     print("Site "+str(list_sites[site]["id"])+": rate: start date: ")
+# print("Number of edges found: "+str(number_of_edges))
 
