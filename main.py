@@ -15,17 +15,17 @@ number_of_sites, list_sites, safe_node_id, number_of_edges, list_edges = parser.
 
 
 # Computing the lower and higher limits of the evacuation time
-# list_sites = utilities.estimate_sites_evacuation_times(list_sites, list_edges)
+list_sites = utilities.estimate_sites_evacuation_times(list_sites, list_edges, safe_node_id)
 #
-# sorted_list = utilities.sort_sites_by_evacuation_time(list_sites)
-# print()
-# print(sorted_list)
-# print()
+sorted_list = utilities.sort_sites_by_evacuation_time(list_sites)
+# /
+
+print(list_sites)
+
+borne_inf = bornes.find_borne_inf(list_sites)
+borne_sup = bornes.find_borne_sup(list_sites, list_edges, safe_node_id)
 #
-# borne_inf = bornes.find_borne_inf(list_sites, list_edges)
-# borne_sup = bornes.find_borne_sup(list_sites, list_edges)
-
-
+#
 # Debug: Creating an arbitrary solution to test
 for site in list_sites:
     list_sites[site]["evacuation_rate"] = 3
@@ -54,4 +54,3 @@ for edge in list_edges:
 # for site in list_sites:
 #     print("Site "+str(list_sites[site]["id"])+": rate: start date: ")
 # print("Number of edges found: "+str(number_of_edges))
-

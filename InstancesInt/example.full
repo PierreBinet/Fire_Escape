@@ -13,4 +13,3 @@ c [graph] format: header with <num nodes> <num edges> then one line per edge <no
 3 5 9223372036854775807 6 3
 4 5 9223372036854775807 9 10
 5 6 9223372036854775807 12 11
-
