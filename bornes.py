@@ -4,8 +4,8 @@ def find_borne_inf(list_sites, list_edges):
     borne_inf = 0
 
     for site in list_sites:
-        if site["estimated_evacuation_time"] > borne_inf:
-            borne_inf = site["estimated_evacuation_time"]
+        if list_sites[site]["estimated_evacuation_time"] > borne_inf:
+            borne_inf = list_sites[site]["estimated_evacuation_time"]
 
     print("Borne inf = " + str(borne_inf) + " time steps")
 

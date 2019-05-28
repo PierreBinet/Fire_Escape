@@ -9,17 +9,17 @@ def find_edge(last_node, next_node, list_edges):
 
 
 def estimate_sites_evacuation_times(list_sites, list_edges):
-    for site in list_sites:
-        min_capacity = find_min_capacity(site, list_edges)
+    for site_index in list_sites:
+        min_capacity = find_min_capacity(site_index, list_sites, list_edges)
         total_length = find_length_to_safe_node(site, list_edges)
         total_evacuation_time = site["pop"]/min_capacity + total_length
         site["estimated_evacuation_time"] = total_evacuation_time
     return list_sites
 
 
-def find_min_capacity(site, list_edges):
+def find_min_capacity(site_index, list_sites, list_edges):
     min_capacity = sys.maxsize
-    first_edge = find_edge(site["id"], site["node1"], list_edges)
+    first_edge = find_edge(list_sites[site_index]["id"], list_sites[site_index]["node1"], list_edges)
 
     if first_edge["capacity"] < min_capacity:
         min_capacity = first_edge["capacity"]
