@@ -57,5 +57,7 @@ def solution_is_valid(list_sites, list_edges):
         for t in final_edge_event:
             valid &= (t <= list_edges[edge]["capacity"])
         valid &= ((len(final_edge_event)-1) <= list_edges[edge]["due_date"])
-        print((len(final_edge_event)-1))
+
+        # print((len(final_edge_event)-1))
+
     return valid
