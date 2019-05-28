@@ -38,11 +38,11 @@ def solution_is_valid(list_sites, list_edges):
         if list_sites[site]["evacuation_start_date"] > 0:
             for t in range(0, list_sites[site]["evacuation_start_date"]):
                 list_sites[site]["list_event"].append(0)
-        else:
-            for t in range(list_sites[site]["evacuation_start_date"], quot):
-                list_sites[site]["list_event"].append(list_sites[site]["evacuation_rate"])
-            if rest > 0:
-                list_sites[site]["list_event"].append(rest)
+
+        for t in range(list_sites[site]["evacuation_start_date"], quot):
+            list_sites[site]["list_event"].append(list_sites[site]["evacuation_rate"])
+        if rest > 0:
+            list_sites[site]["list_event"].append(rest)
         # copy of each site's array into the corresponding edge
         list_edges[site]["list_event"] = []
         list_edges[site]["list_event"] = list_sites[site]["list_event"]
@@ -52,8 +52,10 @@ def solution_is_valid(list_sites, list_edges):
     # for each edge, call the edge checker function which return the list_event "array" of the edge
     for edge in list_edges:
         final_edge_event = edge_checker(edge, list_edges)
+
         # and check the validity of the returned "array"
         for t in final_edge_event:
-            valid &= (final_edge_event[t] < list_edges[edge]["capacity"])
-
+            valid &= (t <= list_edges[edge]["capacity"])
+        valid &= ((len(final_edge_event)-1) <= list_edges[edge]["due_date"])
+        print((len(final_edge_event)-1))
     return valid
