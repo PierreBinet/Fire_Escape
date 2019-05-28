@@ -39,14 +39,24 @@ valid = solution_checker.solution_is_valid(list_sites, list_edges)
 
 # Printing the solution
 print("PRINTING THE SOLUTION")
-print("File : \""+filename+"\"")
-print("Is the solution found valid? "+str(valid))
+print("Solved the problem with the following input file : \""+filename+"\"")
+print("Found "+str(number_of_sites)+" site(s) to evacuate:")
+for site in list_sites:
+    print("Site n°"+str(site)+" = evacuation_rate: "+str(list_sites[site]["evacuation_rate"])+
+          ", evacuation_start_date: "+str(list_sites[site]["evacuation_start_date"]))
+if valid:
+    print("Solution VALID")
+else:
+    print("Solution INVALID")
 print("Evacuation total time : "+str(len(list_edges[str(number_of_edges)]["list_event"])))
 print("Computing time : ")
-print("Method used : personal method\n")
+print("Method used : handmade\n")
+print("Bastien & Pierre")
 
-for edge in list_edges:
-    print("edge n°"+edge+": capacity: "+str(list_edges[edge]["capacity"])+", "+str(list_edges[edge]["list_event"]))
+
+# Printing the edges
+# for edge in list_edges:
+#     print("edge n°"+edge+": capacity: "+str(list_edges[edge]["capacity"])+", "+str(list_edges[edge]["list_event"]))
 
 
 # Useless for now, since we do not find our own solutions (yet)
