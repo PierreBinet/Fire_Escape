@@ -30,6 +30,8 @@ def solution_is_valid(list_sites, list_edges):
     # first part of the checker:
     # for each site, create an "array" of the people evacuated/time unit until the evacuation is over
     valid = True
+    valid_cap = True
+    valid_due_date = True
 
     for site in list_sites:
         list_sites[site]["list_event"] = []
@@ -56,9 +58,10 @@ def solution_is_valid(list_sites, list_edges):
 
         # and check the validity of the returned "array"
         for t in final_edge_event:
-            valid &= (t <= list_edges[edge]["capacity"])
-        valid &= ((len(final_edge_event)-1) <= list_edges[edge]["due_date"])
+            valid_cap &= (t <= list_edges[edge]["capacity"])
+        valid_due_date &= ((len(final_edge_event)-1) <= list_edges[edge]["due_date"])
 
         # print((len(final_edge_event)-1))
+    valid = valid_cap and valid_due_date
 
-    return valid
+    return valid, valid_cap, valid_due_date

@@ -10,7 +10,7 @@ import time
 start_time = time.time()
 
 # Fetching the file
-path = './InstancesInt/example.full'
+path = './InstancesInt/sparse_10_30_3_10_I.full'
 filename = os.path.basename(path)
 
 
@@ -44,24 +44,30 @@ borne_sup = bornes.find_borne_sup(list_sites, list_edges, safe_node_id)
 
 
 # Checking the validness of a solution
-valid = solution_checker.solution_is_valid(list_sites, list_edges)
+valid, valid_cap, valid_due_date = solution_checker.solution_is_valid(list_sites, list_edges)
 
 
 # Ending the "computing time" timer
 end_time = time.time()
 
+print(list_edges[str(last_edge_index)]["length"])
+print(len(list_edges[str(last_edge_index)]["list_event"]))
 
 # Printing the solution
 print("PRINTING THE SOLUTION")
 print("Solved the problem with the following input file : \""+filename+"\"")
 print("Found "+str(number_of_sites)+" site(s) to evacuate:")
 for site in list_sites:
-    print("Site n°"+str(site)+" = evacuation_rate: "+str(list_sites[site]["evacuation_rate"])+
-          ", evacuation_start_date: "+str(list_sites[site]["evacuation_start_date"]))
+    print("Site n°%3s" % site, "= rate: %3s" % list_sites[site]["evacuation_rate"],
+          ", start_date: %3s" % list_sites[site]["evacuation_start_date"],
+          ", estimated_evacuation_time: %3s" % list_sites[site]["estimated_evacuation_time"])
 if valid:
     print("Solution VALID")
 else:
-    print("Solution INVALID")
+    if not valid_cap:
+        print("Solution INVALID because edge capacities were violated")
+    if not valid_due_date:
+        print("Solution INVALID because edges were used beyond their due dates")
 print("Evacuation total time : " + str(len(list_edges[str(last_edge_index)]["list_event"])
                                        + list_edges[str(last_edge_index)]["length"]))
 print("Computing time : " + str((end_time - start_time)*1000) + " ms")
