@@ -50,7 +50,7 @@ if valid:
     print("Solution VALID")
 else:
     print("Solution INVALID")
-print("Evacuation total time : "+str(len(list_edges[str(number_of_edges)]["list_event"])))
+print("Evacuation total time : "+ str(len(list_edges[str(number_of_edges)]["list_event"]) + utilities.get_final_edge_length(list_edges, safe_node_id)))
 print("Computing time : " + str((end_time - start_time)*1000) + " ms")
 print("Method used : handmade\n")
 print("Bastien & Pierre")

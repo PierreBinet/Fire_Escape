@@ -53,6 +53,18 @@ def find_length_to_safe_node(site_index, list_edges, safe_node_id):
     return length
 
 
+def get_final_edge_length(list_edges, safe_node_id):
+    first_edge = list_edges[str(1)]
+    current_edge = list_edges[str(first_edge["node_dst"])]
+
+    while current_edge["node_dst"] != safe_node_id:
+        current_edge = list_edges[str(current_edge["node_dst"])]
+
+    print(current_edge)
+
+    return current_edge["length"]
+
+
 def sort_sites_by_evacuation_time(list_sites):
     sorted_list = []
     sites_index_left_to_sort = []
