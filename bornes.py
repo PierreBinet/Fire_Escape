@@ -15,6 +15,7 @@ def find_borne_inf(list_sites):
 
 def find_borne_sup(list_sites, list_edges, safe_node_id):
     borne_sup = 0
+    start_date = 0
     sorted_list = utilities.sort_sites_by_evacuation_time(list_sites)
 
     list_following_sites = []
@@ -35,6 +36,10 @@ def find_borne_sup(list_sites, list_edges, safe_node_id):
             list_following_sites.pop(0)
 
         borne_sup += round(list_sites[site_index]["pop"]/path_min_capacity) + overtime
+
+        list_sites[site_index]["evacuation_rate"] = path_min_capacity
+        list_sites[site_index]["evacuation_start_date"] = start_date
+        start_date += round(list_sites[site_index]["pop"]/path_min_capacity)
 
     print("Borne sup = " + str(borne_sup) + " time steps")
     return borne_sup

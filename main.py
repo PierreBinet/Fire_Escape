@@ -26,12 +26,12 @@ borne_inf = bornes.find_borne_inf(list_sites)
 borne_sup = bornes.find_borne_sup(list_sites, list_edges, safe_node_id)
 #
 #
-# Debug: Creating an arbitrary solution to test
-for site in list_sites:
-    list_sites[site]["evacuation_rate"] = 3
-    list_sites[site]["evacuation_start_date"] = 0
-for edge in list_edges:
-    list_edges[edge]["due_date"] = 32
+# # Debug: Creating an arbitrary solution to test
+# for site in list_sites:
+#     list_sites[site]["evacuation_rate"] = 3
+#     list_sites[site]["evacuation_start_date"] = 0
+# for edge in list_edges:
+#     list_edges[edge]["due_date"] = 32
 
 # Checking the validness of a solution
 valid = solution_checker.solution_is_valid(list_sites, list_edges)
@@ -55,8 +55,8 @@ print("Bastien & Pierre")
 
 
 # Printing the edges
-# for edge in list_edges:
-#     print("edge n°"+edge+": capacity: "+str(list_edges[edge]["capacity"])+", "+str(list_edges[edge]["list_event"]))
+for edge in list_edges:
+    print("edge n°"+edge+": capacity: "+str(list_edges[edge]["capacity"])+", "+str(list_edges[edge]["list_event"]))
 
 
 # Useless for now, since we do not find our own solutions (yet)

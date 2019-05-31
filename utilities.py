@@ -13,7 +13,7 @@ def estimate_sites_evacuation_times(list_sites, list_edges, safe_node_id):
         min_capacity = find_min_capacity(site_index, list_edges, safe_node_id)
         total_length = find_length_to_safe_node(site_index, list_edges, safe_node_id)
         total_evacuation_time = list_sites[site_index]["pop"]/min_capacity + total_length
-        list_sites[site_index]["estimated_evacuation_time"] = total_evacuation_time
+        list_sites[site_index]["estimated_evacuation_time"] = int(total_evacuation_time)
     return list_sites
 
 
