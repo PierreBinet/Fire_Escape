@@ -36,14 +36,11 @@ def solution_is_valid(list_sites, list_edges):
         quot = (list_sites[site]["pop"]//list_sites[site]["evacuation_rate"])
         rest = (list_sites[site]["pop"] % list_sites[site]["evacuation_rate"])
 
-        # print("id: "+str(list_sites[site]["id"])+" pop: "+str(list_sites[site]["pop"])+" quot: "+str(quot)+" rest: "+str(rest)+
-        #      " start_date: "+str(list_sites[site]["evacuation_start_date"])+" rate: "+str(list_sites[site]["evacuation_rate"]))
-
         if list_sites[site]["evacuation_start_date"] > 0:
             for t in range(0, list_sites[site]["evacuation_start_date"]):
                 list_sites[site]["list_event"].append(0)
 
-        for t in range(list_sites[site]["evacuation_start_date"], list_sites[site]["evacuation_start_date"]+quot):
+        for t in range(0, quot):
             list_sites[site]["list_event"].append(list_sites[site]["evacuation_rate"])
         if rest > 0:
             list_sites[site]["list_event"].append(rest)

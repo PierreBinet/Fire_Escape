@@ -63,7 +63,9 @@ def parser_data(path):
         for edge in list_edges:  # parent assignments
             if list_edges[edge]["node_dst"] != safe_node_id:
                 list_edges[str(list_edges[edge]["node_dst"])]["parent"].append(list_edges[edge]["node_src"])
+            else:
+                last_edge_index = list_edges[edge]["node_src"]
 
         # print(list_edges)
 
-        return number_of_sites, list_sites, safe_node_id, useful_edges, list_edges
+        return number_of_sites, list_sites, safe_node_id, useful_edges, list_edges, last_edge_index

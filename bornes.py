@@ -71,7 +71,7 @@ def find_borne_sup(list_sites, list_edges, safe_node_id):
         current_evacuation_time_left -= math.ceil(population/path_min_capacity)
         start_date += math.ceil(population/path_min_capacity)
 
-    print("Borne sup = " + str(borne_sup))
+    # print("Borne sup = " + str(borne_sup))
 
     for site_index in sorted_list:
         list_sites[site_index]["evacuation_start_date"] = borne_sup - list_sites[site_index]["evacuation_start_date"] - \

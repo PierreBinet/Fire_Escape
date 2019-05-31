@@ -5,6 +5,8 @@ import os.path
 import solution_checker
 import time
 
+
+# Starting the "computing time" timer
 start_time = time.time()
 
 # Fetching the file
@@ -13,10 +15,13 @@ filename = os.path.basename(path)
 
 
 # Parsing the file
-number_of_sites, list_sites, safe_node_id, number_of_edges, list_edges = parser.parser_data(path)
+number_of_sites, list_sites, safe_node_id, number_of_edges, list_edges, last_edge_index = parser.parser_data(path)
+
 
 # Computing the min capacity of the path from each site
 utilities.min_capacities(list_sites, list_edges, safe_node_id)
+
+
 # Computing the lower and higher limits of the evacuation time
 list_sites = utilities.estimate_sites_evacuation_times(list_sites, list_edges, safe_node_id)
 
@@ -34,10 +39,17 @@ borne_sup = bornes.find_borne_sup(list_sites, list_edges, safe_node_id)
 #     list_edges[edge]["due_date"] = 32
 
 
+# Finding a solution based on the bornes sup/inf found
+
+
+
 # Checking the validness of a solution
 valid = solution_checker.solution_is_valid(list_sites, list_edges)
 
+
+# Ending the "computing time" timer
 end_time = time.time()
+
 
 # Printing the solution
 print("PRINTING THE SOLUTION")
@@ -50,13 +62,14 @@ if valid:
     print("Solution VALID")
 else:
     print("Solution INVALID")
-print("Evacuation total time : "+ str(len(list_edges[str(number_of_edges)]["list_event"]) + utilities.get_final_edge_length(list_edges, safe_node_id)))
+print("Evacuation total time : " + str(len(list_edges[str(last_edge_index)]["list_event"])
+                                       + list_edges[str(last_edge_index)]["length"]))
 print("Computing time : " + str((end_time - start_time)*1000) + " ms")
-print("Method used : handmade\n")
-print("Bastien & Pierre")
+print("Method used : handmade")
+print("Bastien & Pierre\n")
 
 
 # Printing the edges
 for edge in list_edges:
-    print("edge n°"+edge+ str(list_edges[edge]["list_event"]))
+    print("edge n°" + edge + str(list_edges[edge]["list_event"]))
 
