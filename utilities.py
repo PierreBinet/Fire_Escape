@@ -1,13 +1,6 @@
 import copy
 
 
-def find_edge(last_node, next_node, list_edges):
-    for edge in list_edges:
-        if ([edge["node_src"], edge["node_dst"]] == [last_node, next_node]) or \
-          ([edge["node_dst"], edge["node_src"]] == [last_node, next_node]):
-            return edge
-
-
 def estimate_sites_evacuation_times(list_sites, list_edges, safe_node_id):
     for site_index in list_sites:
         min_capacity = list_sites[site_index]["path_min_capacity"]

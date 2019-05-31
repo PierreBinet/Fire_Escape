@@ -71,5 +71,5 @@ print("Bastien & Pierre\n")
 
 # Printing the edges
 for edge in list_edges:
-    print("edge n°" + edge + str(list_edges[edge]["list_event"]))
+    print("edge n°%3s: " % edge, "capacity: %3s" % list_edges[edge]["capacity"], str(list_edges[edge]["list_event"]))
 
