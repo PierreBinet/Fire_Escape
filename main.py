@@ -16,22 +16,20 @@ number_of_sites, list_sites, safe_node_id, number_of_edges, list_edges = parser.
 
 # Computing the lower and higher limits of the evacuation time
 list_sites = utilities.estimate_sites_evacuation_times(list_sites, list_edges, safe_node_id)
-#
-sorted_list = utilities.sort_sites_by_evacuation_time(list_sites)
-# /
 
-print(list_sites)
+sorted_list = utilities.sort_sites_by_evacuation_time(list_sites)
 
 borne_inf = bornes.find_borne_inf(list_sites)
 borne_sup = bornes.find_borne_sup(list_sites, list_edges, safe_node_id)
-#
-#
-# # Debug: Creating an arbitrary solution to test
+
+
+# Debug: Creating an arbitrary solution to test
 # for site in list_sites:
 #     list_sites[site]["evacuation_rate"] = 3
 #     list_sites[site]["evacuation_start_date"] = 0
 # for edge in list_edges:
 #     list_edges[edge]["due_date"] = 32
+
 
 # Checking the validness of a solution
 valid = solution_checker.solution_is_valid(list_sites, list_edges)
@@ -58,9 +56,3 @@ print("Bastien & Pierre")
 for edge in list_edges:
     print("edge n°"+edge+": capacity: "+str(list_edges[edge]["capacity"])+", "+str(list_edges[edge]["list_event"]))
 
-
-# Useless for now, since we do not find our own solutions (yet)
-# print("Number of sites found: "+str(number_of_sites))
-# for site in list_sites:
-#     print("Site "+str(list_sites[site]["id"])+": rate: start date: ")
-# print("Number of edges found: "+str(number_of_edges))

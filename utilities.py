@@ -19,7 +19,7 @@ def estimate_sites_evacuation_times(list_sites, list_edges, safe_node_id):
 
 def find_min_capacity(site_index, list_edges, safe_node_id):
     first_edge = list_edges[site_index]
-    print(first_edge)
+    # print(first_edge)
     min_capacity = first_edge["capacity"]
 
     current_edge = list_edges[str(first_edge["node_dst"])]

@@ -8,7 +8,7 @@ def find_borne_inf(list_sites):
         if list_sites[site]["estimated_evacuation_time"] > borne_inf:
             borne_inf = list_sites[site]["estimated_evacuation_time"]
 
-    print("Borne inf = " + str(borne_inf) + " time steps")
+    # print("Borne inf = " + str(borne_inf) + " time steps")
 
     return borne_inf
 
@@ -41,5 +41,5 @@ def find_borne_sup(list_sites, list_edges, safe_node_id):
         list_sites[site_index]["evacuation_start_date"] = start_date
         start_date += round(list_sites[site_index]["pop"]/path_min_capacity)
 
-    print("Borne sup = " + str(borne_sup) + " time steps")
+    # print("Borne sup = " + str(borne_sup) + " time steps")
     return borne_sup
