@@ -10,28 +10,31 @@ def find_edge(last_node, next_node, list_edges):
 
 def estimate_sites_evacuation_times(list_sites, list_edges, safe_node_id):
     for site_index in list_sites:
-        min_capacity = find_min_capacity(site_index, list_edges, safe_node_id)
+        min_capacity = list_sites[site_index]["path_min_capacity"]
         total_length = find_length_to_safe_node(site_index, list_edges, safe_node_id)
         total_evacuation_time = list_sites[site_index]["pop"]/min_capacity + total_length
         list_sites[site_index]["estimated_evacuation_time"] = int(total_evacuation_time)
     return list_sites
 
 
-def find_min_capacity(site_index, list_edges, safe_node_id):
-    first_edge = list_edges[site_index]
-    # print(first_edge)
-    min_capacity = first_edge["capacity"]
+def min_capacities(list_sites, list_edges, safe_node_id):
+    for site_index in list_sites:
+        first_edge = list_edges[site_index]
+        print(first_edge)
+        min_capacity = first_edge["capacity"]
 
-    current_edge = list_edges[str(first_edge["node_dst"])]
-    while current_edge["node_dst"] != safe_node_id:
-        if current_edge["capacity"] < min_capacity:
+        current_edge = list_edges[str(first_edge["node_dst"])]
+        while current_edge["node_dst"] != safe_node_id:
+            if current_edge["capacity"] < min_capacity:
+                min_capacity = current_edge["capacity"]
+            current_edge = list_edges[str(current_edge["node_dst"])]
+
+        if current_edge["capacity"] < min_capacity:  # on traite la dernière arête
             min_capacity = current_edge["capacity"]
-        current_edge = list_edges[str(current_edge["node_dst"])]
 
-    if current_edge["capacity"] < min_capacity:  # on traite la dernière arête
-        min_capacity = current_edge["capacity"]
+        list_sites[site_index]["path_min_capacity"] = min_capacity
 
-    return min_capacity
+    return list_sites
 
 
 def find_length_to_safe_node(site_index, list_edges, safe_node_id):
@@ -70,4 +73,3 @@ def sort_sites_by_evacuation_time(list_sites):
         sites_index_left_to_sort.pop(sites_index_left_to_sort.index(max_site_index))
 
     return sorted_list
-
