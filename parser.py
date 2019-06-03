@@ -19,7 +19,7 @@ def parser_data(path):
             line = fp.readline()
             tab = line.split(' ')
             site = {"id": int(tab[0]), "pop": int(tab[1]), "max_rate": int(tab[2]), "number_of_nodes_in_path":
-                int(tab[3])}
+                    int(tab[3])}
             last_node = int(tab[0])
             for k in range(site["number_of_nodes_in_path"]):
                 next_node = int(tab[4+k])
@@ -42,6 +42,8 @@ def parser_data(path):
         useful_edges = 0
 
         list_edges = {}
+
+        last_edge_index = []
 
         for i in range(number_of_edges):
             line = fp.readline()

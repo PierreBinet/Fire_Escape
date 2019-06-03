@@ -42,16 +42,14 @@ borne_sup = bornes.find_borne_sup(list_sites, list_edges, safe_node_id)
 # Finding a solution based on the bornes sup/inf found
 
 
-
 # Checking the validness of a solution
-valid, valid_cap, valid_due_date = solution_checker.solution_is_valid(list_sites, list_edges)
+valid, valid_cap, valid_due_date, evacuation_total_time = \
+    solution_checker.solution_is_valid(list_sites, list_edges, last_edge_index)
 
 
 # Ending the "computing time" timer
 end_time = time.time()
 
-print(list_edges[str(last_edge_index)]["length"])
-print(len(list_edges[str(last_edge_index)]["list_event"]))
 
 # Printing the solution
 print("PRINTING THE SOLUTION")
@@ -68,14 +66,25 @@ else:
         print("Solution INVALID because edge capacities were violated")
     if not valid_due_date:
         print("Solution INVALID because edges were used beyond their due dates")
-print("Evacuation total time : " + str(len(list_edges[str(last_edge_index)]["list_event"])
-                                       + list_edges[str(last_edge_index)]["length"]))
+print("Solution lower limit: "+str(borne_inf)+" upper limit: "+str(borne_sup))
+print("Evacuation total time : " + str(evacuation_total_time))
 print("Computing time : " + str((end_time - start_time)*1000) + " ms")
 print("Method used : handmade")
 print("Bastien & Pierre\n")
 
+#
+# # Printing the edges
+# for edge in list_edges:
+#     print("edge n°%3s: " % edge, "capacity: %3s" % list_edges[edge]["capacity"], str(list_edges[edge]["list_event"]))
 
-# Printing the edges
-for edge in list_edges:
-    print("edge n°%3s: " % edge, "capacity: %3s" % list_edges[edge]["capacity"], str(list_edges[edge]["list_event"]))
+#
+# list_edges["13"]["checked_?"] = False
+# list_edges["97"]["checked_?"] = False
+# print(solution_checker.edge_checker("13", list_edges))
+# print(solution_checker.edge_checker("97", list_edges))
 
+
+current_edge = str(48)
+while current_edge != str(safe_node_id):
+    print(list_edges[current_edge])
+    current_edge = str(list_edges[current_edge]["node_dst"])
