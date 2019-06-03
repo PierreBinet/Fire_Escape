@@ -10,7 +10,7 @@ import time
 start_time = time.time()
 
 # Fetching the file
-path = './InstancesInt/sparse_10_30_3_10_I.full'
+path = 'InstancesInt/dense_10_30_3_7_I.full'
 filename = os.path.basename(path)
 
 
@@ -83,8 +83,3 @@ print("Bastien & Pierre\n")
 # print(solution_checker.edge_checker("13", list_edges))
 # print(solution_checker.edge_checker("97", list_edges))
 
-
-current_edge = str(48)
-while current_edge != str(safe_node_id):
-    print(list_edges[current_edge])
-    current_edge = str(list_edges[current_edge]["node_dst"])

@@ -52,13 +52,15 @@ def parser_data(path):
 
             if [int(tab[0]), int(tab[1])] in needed_edges:
                 edge = {"node_src": int(tab[0]), "node_dst": int(tab[1]), "due_date": int(tab[2]),
-                        "length": int(tab[3]), "capacity": int(tab[4]), "parent": parent, "checked_?": False}
+                        "length": int(tab[3]), "capacity": int(tab[4]), "parent": parent, "checked_?": False,
+                        "checked_site": False}
                 list_edges[str(edge["node_src"])] = edge
                 useful_edges += 1
 
             elif [int(tab[1]), int(tab[0])] in needed_edges:
                 edge = {"node_src": int(tab[1]), "node_dst": int(tab[0]), "due_date": int(tab[2]),
-                        "length": int(tab[3]), "capacity": int(tab[4]), "parent": parent, "checked_?": False}
+                        "length": int(tab[3]), "capacity": int(tab[4]), "parent": parent, "checked_?": False,
+                        "checked_site": False}
                 list_edges[str(edge["node_src"])] = edge
                 useful_edges += 1
 
