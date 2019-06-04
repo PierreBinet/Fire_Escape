@@ -3,6 +3,7 @@ import bornes
 import utilities
 import os.path
 import solution_checker
+import solution_finder
 import time
 
 
@@ -10,7 +11,7 @@ import time
 start_time = time.time()
 
 # Fetching the file
-path = 'InstancesInt/dense_10_30_3_7_I.full'
+path = 'InstancesInt/example.full'
 filename = os.path.basename(path)
 
 
@@ -31,15 +32,23 @@ borne_inf = bornes.find_borne_inf(list_sites)
 borne_sup = bornes.find_borne_sup(list_sites, list_edges, safe_node_id)
 
 
+list_original = {}
 # Debug: Creating an arbitrary solution to test
-# for site in list_sites:
-#     list_sites[site]["evacuation_rate"] = 3
-#     list_sites[site]["evacuation_start_date"] = 0
-# for edge in list_edges:
-#     list_edges[edge]["due_date"] = 32
+for site in list_sites:
+    list_sites[site]["evacuation_rate"] = 3
+    list_sites[site]["evacuation_start_date"] = 52
+    list_original[site] = []
+    list_original[site].append(list_sites[site]["evacuation_rate"])
+    list_original[site].append(list_sites[site]["evacuation_start_date"])
+
+for edge in list_edges:
+    list_edges[edge]["due_date"] = 358
+
+
 
 
 # Finding a solution based on the bornes sup/inf found
+solution_finder.find_solution(number_of_sites, list_sites, list_edges, last_edge_index, list_original)
 
 
 # Checking the validness of a solution
@@ -72,12 +81,12 @@ print("Computing time : " + str((end_time - start_time)*1000) + " ms")
 print("Method used : handmade")
 print("Bastien & Pierre\n")
 
-#
-# # Printing the edges
+
+# Printing the edges
 # for edge in list_edges:
 #     print("edge n°%3s: " % edge, "capacity: %3s" % list_edges[edge]["capacity"], str(list_edges[edge]["list_event"]))
 
-#
+
 # list_edges["13"]["checked_?"] = False
 # list_edges["97"]["checked_?"] = False
 # print(solution_checker.edge_checker("13", list_edges))
