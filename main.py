@@ -5,6 +5,7 @@ import os.path
 import solution_checker
 import solution_finder
 import time
+import total_time
 
 
 # Starting the "computing time" timer
@@ -35,14 +36,14 @@ borne_sup = bornes.find_borne_sup(list_sites, list_edges, safe_node_id)
 list_original = {}
 # Debug: Creating an arbitrary solution to test
 for site in list_sites:
-    list_sites[site]["evacuation_rate"] = 3
-    list_sites[site]["evacuation_start_date"] = 52
+    # list_sites[site]["evacuation_rate"] = 3
+    # list_sites[site]["evacuation_start_date"] = 52
     list_original[site] = []
     list_original[site].append(list_sites[site]["evacuation_rate"])
     list_original[site].append(list_sites[site]["evacuation_start_date"])
 
-for edge in list_edges:
-    list_edges[edge]["due_date"] = 358
+# for edge in list_edges:
+#     list_edges[edge]["due_date"] = 358
 
 
 
@@ -73,6 +74,8 @@ if valid:
 else:
     if not valid_cap:
         print("Solution INVALID because edge capacities were violated")
+    else:
+        print("Edges capacities respected")
     if not valid_due_date:
         print("Solution INVALID because edges were used beyond their due dates")
 print("Solution lower limit: "+str(borne_inf)+" upper limit: "+str(borne_sup))
@@ -83,10 +86,13 @@ print("Bastien & Pierre\n")
 
 
 # Printing the edges
-# for edge in list_edges:
-#     print("edge n°%3s: " % edge, "capacity: %3s" % list_edges[edge]["capacity"], str(list_edges[edge]["list_event"]))
+for edge in list_edges:
+    print("edge n°%3s: " % edge, "capacity: %3s" % list_edges[edge]["capacity"], str(list_edges[edge]["list_event"]))
 
+total_time = total_time.compute_total_time(list_sites)
 
+print("TOTAL TIME : ")
+print(total_time)
 # list_edges["13"]["checked_?"] = False
 # list_edges["97"]["checked_?"] = False
 # print(solution_checker.edge_checker("13", list_edges))

@@ -1,5 +1,6 @@
 def sum_shifted_list(list_orig, l2, shift):
-    l2 = [0]*shift + l2
+    if not shift == 0:
+        l2 = [0]*shift + l2
     for t in range(len(l2)):
         if t >= len(list_orig):
             list_orig.append(l2[t])
@@ -12,9 +13,9 @@ def edge_checker(edge_index, list_edges):
 
     # this function creates (if it is not already created) the list_event "array" of each edge
     # by adding time-shifted "arrays" of their parent edge(s)
-    print("edge: "+str(edge_index))
-    if list_edges[edge_index]["parent"]:
-        print("parents: "+str(list_edges[edge_index]["parent"]))
+    # print("edge: "+str(edge_index))
+    # if list_edges[edge_index]["parent"]:
+    #     print("parents: "+str(list_edges[edge_index]["parent"]))
     if not list_edges[edge_index]["checked_?"]:
         if not list_edges[edge_index]["checked_site"]:
             list_edges[edge_index]["list_event"] = []
