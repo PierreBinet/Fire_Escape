@@ -5,7 +5,7 @@ import os.path
 import solution_checker
 import solution_finder
 import time
-import total_time
+# import total_time
 
 
 # Starting the "computing time" timer
@@ -41,20 +41,20 @@ for site in list_sites:
     list_original[site] = []
     list_original[site].append(list_sites[site]["evacuation_rate"])
     list_original[site].append(list_sites[site]["evacuation_start_date"])
-
-# for edge in list_edges:
-#     list_edges[edge]["due_date"] = 358
-
-
+for edge in list_edges:
+    list_edges[edge]["due_date"] = 37
 
 
 # Finding a solution based on the bornes sup/inf found
-solution_finder.find_solution(number_of_sites, list_sites, list_edges, last_edge_index, list_original)
+#solution_finder.find_solution(number_of_sites, list_sites, list_edges, last_edge_index, list_original)
 
 
 # Checking the validness of a solution
-valid, valid_cap, valid_due_date, evacuation_total_time = \
+valid, valid_cap, valid_due_date, evacuation_total_time, list_overcap, list_overdue, list_cap_filling =\
     solution_checker.solution_is_valid(list_sites, list_edges, last_edge_index)
+print("list_overdue: "+str(list_overdue))
+print("list_overcap: "+str(list_overcap))
+print("list_cap_filling: "+str(list_cap_filling))
 
 
 # Ending the "computing time" timer
@@ -89,10 +89,11 @@ print("Bastien & Pierre\n")
 for edge in list_edges:
     print("edge n°%3s: " % edge, "capacity: %3s" % list_edges[edge]["capacity"], str(list_edges[edge]["list_event"]))
 
-total_time = total_time.compute_total_time(list_sites)
 
-print("TOTAL TIME : ")
-print(total_time)
+# total_time = total_time.compute_total_time(list_sites)
+#
+# print("TOTAL TIME : ")
+# print(total_time)
 # list_edges["13"]["checked_?"] = False
 # list_edges["97"]["checked_?"] = False
 # print(solution_checker.edge_checker("13", list_edges))

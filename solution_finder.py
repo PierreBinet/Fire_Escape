@@ -8,54 +8,13 @@ def find_solution(number_of_sites, list_sites, list_edges, last_edge_index, list
     date_blocked_sites = []
     rate_blocked_sites = []
 
-    valid, valid_cap, _, best_solution_so_far = solution_checker.solution_is_valid(list_sites, list_edges, last_edge_index)
+    valid, valid_cap, _, best_solution_so_far, list_overcap, list_overdue, list_cap_filling\
+        = solution_checker.solution_is_valid(list_sites, list_edges, last_edge_index)
     print("VALID BEGIN : " + str(valid_cap))
 
     best_solution_so_far = compress_dates(date_blocked_sites, number_of_sites, list_sites, list_edges, last_edge_index, best_solution_so_far)
     # best_solution_so_far = adjust_rates(rate_blocked_sites, number_of_sites, list_sites, list_edges, last_edge_index, list_original, best_solution_so_far)
 
-
-def compress_start_dates(date_blocked_sites, number_of_sites, list_sites, list_edges, last_edge_index, best_solution_so_far):
-    tmp_solution = sys.maxsize
-    while len(date_blocked_sites) < number_of_sites:
-        for site in list_sites:
-            if site not in date_blocked_sites:
-                if list_sites[site]["evacuation_start_date"] > 0:
-                    list_sites[site]["evacuation_start_date"] -= 1
-                    valid, valid_cap, _, tmp_solution = \
-                        solution_checker.solution_is_valid(list_sites, list_edges, last_edge_index)
-                    if not valid_cap:
-                        list_sites[site]["evacuation_start_date"] += 1
-                        date_blocked_sites.append(site)
-                else:
-                    date_blocked_sites.append(site)
-    return best_solution_so_far
-
-
-def adjust_rate(rate_blocked_sites, number_of_sites, list_sites, list_edges, last_edge_index, list_original, best_solution_so_far):
-    tmp_solution = sys.maxsize
-    while len(rate_blocked_sites) < number_of_sites:
-        for site in list_sites:
-            if site not in rate_blocked_sites:
-                if list_sites[site]["evacuation_start_date"] > 0:
-                    list_sites[site]["evacuation_start_date"] -= 1
-                    valid, valid_cap, _, _ = solution_checker.solution_is_valid(list_sites, list_edges, last_edge_index)
-                    while not valid_cap:
-                        for sites in list_sites:
-                            if list_sites[sites]["evacuation_rate"] > 1:
-                                list_sites[sites]["evacuation_rate"] -= 1
-                            else:
-                                list_sites[site]["evacuation_rate"] = list_original[site][0]
-                                list_sites[site]["evacuation_start_date"] = list_original[site][1]
-                                rate_blocked_sites.append(site)
-                        valid, valid_cap, _, _ = solution_checker.solution_is_valid(list_sites, list_edges, last_edge_index)
-                rate_blocked_sites.append(site)
-                # ICI rajouter condition pour diminuer rate pour secteur en conflits
-
-            if tmp_solution < best_solution_so_far:
-                best_solution_so_far = tmp_solution
-
-    return best_solution_so_far
 
 
 def compress_dates(date_blocked_sites, number_of_sites, list_sites, list_edges, last_edge_index, best_solution_so_far):
@@ -64,7 +23,8 @@ def compress_dates(date_blocked_sites, number_of_sites, list_sites, list_edges, 
         we_continue = False
         for site in list_sites:
             list_sites[site]["evacuation_start_date"] -= 1
-            valid, valid_cap, _, tmp_solution = solution_checker.solution_is_valid(list_sites, list_edges, last_edge_index)
+            valid, valid_cap, _, tmp_solution, list_overcap, list_overdue, list_cap_filling\
+                = solution_checker.solution_is_valid(list_sites, list_edges, last_edge_index)
 
             if valid_cap and tmp_solution < best_solution_so_far:
                 best_solution_so_far = tmp_solution
@@ -84,7 +44,8 @@ def adjust_rates(rate_blocked_sites, number_of_sites, list_sites, list_edges, la
             it_was_useful = False
             if other_site != site and list_sites[other_site]["evacuation_rate"] > 1:
                 list_sites[other_site]["evacuation_rate"] -= 1
-                valid, valid_cap, _, tmp_solution = solution_checker.solution_is_valid(list_sites, list_edges, last_edge_index)
+                valid, valid_cap, _, tmp_solution, list_overcap, list_overdue, list_cap_filling =\
+                    solution_checker.solution_is_valid(list_sites, list_edges, last_edge_index)
 
                 debug(list_sites, best_solution_so_far, valid_cap)
 
@@ -118,15 +79,58 @@ def debug(list_sites, best_solution_so_far, valid_cap):
 
 
 
-    # date_blocked_sites = []
-    # while len(date_blocked_sites) < number_of_sites:
-    #     for site in list_sites:
-    #         if site not in date_blocked_sites:
-    #             if list_sites[site]["evacuation_start_date"] > 0:
-    #                 list_sites[site]["evacuation_start_date"] -= 1
-    #                 valid = solution_checker.solution_is_valid(list_sites, list_edges)
-    #                 if not valid:
-    #                     list_sites[site]["evacuation_start_date"] += 1
-    #                     date_blocked_sites.append(site)
-    #             else:
-    #                 date_blocked_sites.append(site)
+# date_blocked_sites = []
+# while len(date_blocked_sites) < number_of_sites:
+#     for site in list_sites:
+#         if site not in date_blocked_sites:
+#             if list_sites[site]["evacuation_start_date"] > 0:
+#                 list_sites[site]["evacuation_start_date"] -= 1
+#                 valid = solution_checker.solution_is_valid(list_sites, list_edges)
+#                 if not valid:
+#                     list_sites[site]["evacuation_start_date"] += 1
+#                     date_blocked_sites.append(site)
+#             else:
+#                 date_blocked_sites.append(site)
+
+
+# def compress_start_dates(date_blocked_sites, number_of_sites, list_sites, list_edges, last_edge_index, best_solution_so_far):
+#     tmp_solution = sys.maxsize
+#     while len(date_blocked_sites) < number_of_sites:
+#         for site in list_sites:
+#             if site not in date_blocked_sites:
+#                 if list_sites[site]["evacuation_start_date"] > 0:
+#                     list_sites[site]["evacuation_start_date"] -= 1
+#                     valid, valid_cap, _, tmp_solution = \
+#                         solution_checker.solution_is_valid(list_sites, list_edges, last_edge_index)
+#                     if not valid_cap:
+#                         list_sites[site]["evacuation_start_date"] += 1
+#                         date_blocked_sites.append(site)
+#                 else:
+#                     date_blocked_sites.append(site)
+#     return best_solution_so_far
+
+
+# def adjust_rate(rate_blocked_sites, number_of_sites, list_sites, list_edges, last_edge_index, list_original, best_solution_so_far):
+#     tmp_solution = sys.maxsize
+#     while len(rate_blocked_sites) < number_of_sites:
+#         for site in list_sites:
+#             if site not in rate_blocked_sites:
+#                 if list_sites[site]["evacuation_start_date"] > 0:
+#                     list_sites[site]["evacuation_start_date"] -= 1
+#                     valid, valid_cap, _, _ = solution_checker.solution_is_valid(list_sites, list_edges, last_edge_index)
+#                     while not valid_cap:
+#                         for sites in list_sites:
+#                             if list_sites[sites]["evacuation_rate"] > 1:
+#                                 list_sites[sites]["evacuation_rate"] -= 1
+#                             else:
+#                                 list_sites[site]["evacuation_rate"] = list_original[site][0]
+#                                 list_sites[site]["evacuation_start_date"] = list_original[site][1]
+#                                 rate_blocked_sites.append(site)
+#                         valid, valid_cap, _, _ = solution_checker.solution_is_valid(list_sites, list_edges, last_edge_index)
+#                 rate_blocked_sites.append(site)
+#                 # ICI rajouter condition pour diminuer rate pour secteur en conflits
+#
+#             if tmp_solution < best_solution_so_far:
+#                 best_solution_so_far = tmp_solution
+#
+#     return best_solution_so_far
