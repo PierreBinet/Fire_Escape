@@ -2,6 +2,21 @@ import solution_checker
 import sys
 
 
+def find_parent_site(edge_index, list_edges, list_sites):
+    current_id = edge_index
+    return_list = []
+    parent_left_to_check = []
+    parent_left_to_check.append(current_id)
+    while parent_left_to_check:
+        current_id = parent_left_to_check.pop()
+        if list_edges[str(current_id)]["is_a_site"]:
+            return_list.append(current_id)
+        for parent in list_edges[str(current_id)]["parent"]:
+            parent_left_to_check.append(parent)
+
+    return return_list
+
+
 def find_solution(number_of_sites, list_sites, list_edges, last_edge_index, list_original):
     # the finder takes a solution that is a valid (capacity speaking) upper limit
     # the first part of the finder shrinks tha start dates so it
@@ -14,7 +29,6 @@ def find_solution(number_of_sites, list_sites, list_edges, last_edge_index, list
 
     best_solution_so_far = compress_dates(date_blocked_sites, number_of_sites, list_sites, list_edges, last_edge_index, best_solution_so_far)
     # best_solution_so_far = adjust_rates(rate_blocked_sites, number_of_sites, list_sites, list_edges, last_edge_index, list_original, best_solution_so_far)
-
 
 
 def compress_dates(date_blocked_sites, number_of_sites, list_sites, list_edges, last_edge_index, best_solution_so_far):

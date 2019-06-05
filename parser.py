@@ -1,3 +1,8 @@
+def is_a_site(list_edges, list_sites):
+    for site in list_sites:
+        list_edges[site]["is_a_site"] = True
+
+
 def parser_data(path):
     with open(path, 'r') as fp:
 
@@ -53,14 +58,14 @@ def parser_data(path):
             if [int(tab[0]), int(tab[1])] in needed_edges:
                 edge = {"node_src": int(tab[0]), "node_dst": int(tab[1]), "due_date": int(tab[2]),
                         "length": int(tab[3]), "capacity": int(tab[4]), "parent": parent, "checked_?": False,
-                        "checked_site": False}
+                        "is_a_site": False}
                 list_edges[str(edge["node_src"])] = edge
                 useful_edges += 1
 
             elif [int(tab[1]), int(tab[0])] in needed_edges:
                 edge = {"node_src": int(tab[1]), "node_dst": int(tab[0]), "due_date": int(tab[2]),
                         "length": int(tab[3]), "capacity": int(tab[4]), "parent": parent, "checked_?": False,
-                        "checked_site": False}
+                        "is_a_site": False}
                 list_edges[str(edge["node_src"])] = edge
                 useful_edges += 1
 
@@ -69,6 +74,8 @@ def parser_data(path):
                 list_edges[str(list_edges[edge]["node_dst"])]["parent"].append(list_edges[edge]["node_src"])
             else:
                 last_edge_index = list_edges[edge]["node_src"]
+
+        is_a_site(list_edges, list_sites)
 
         # print(list_edges)
 

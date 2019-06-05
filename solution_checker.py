@@ -17,7 +17,7 @@ def edge_checker(edge_index, list_edges):
     # if list_edges[edge_index]["parent"]:
     #     print("parents: "+str(list_edges[edge_index]["parent"]))
     if not list_edges[edge_index]["checked_?"]:
-        if not list_edges[edge_index]["checked_site"]:
+        if not list_edges[edge_index]["is_a_site"]:
             list_edges[edge_index]["list_event"] = []
         for parent in list_edges[edge_index]["parent"]:
             parent_list_event = edge_checker(str(parent), list_edges)
@@ -59,7 +59,6 @@ def solution_is_valid(list_sites, list_edges, last_edge_index):
         # copy of each site's array into the corresponding edge
         list_edges[site]["list_event"] = []
         list_edges[site]["list_event"] = list_sites[site]["list_event"]
-        list_edges[site]["checked_site"] = True
 
     # second part of the checker:
     # calls the edge checker function which creates the list_event "array" for the remaining edges

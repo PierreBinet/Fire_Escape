@@ -12,7 +12,7 @@ import time
 start_time = time.time()
 
 # Fetching the file
-path = 'InstancesInt/example.full'
+path = 'InstancesInt/sparse_10_30_3_10_I.full'
 filename = os.path.basename(path)
 
 
@@ -43,6 +43,8 @@ for site in list_sites:
     list_original[site].append(list_sites[site]["evacuation_start_date"])
 for edge in list_edges:
     list_edges[edge]["due_date"] = 37
+
+print("found parent sites: "+str(solution_finder.find_parent_site(193, list_edges, list_sites)))
 
 
 # Finding a solution based on the bornes sup/inf found
