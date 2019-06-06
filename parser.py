@@ -3,7 +3,7 @@ def is_a_site(list_edges, list_sites):
         list_edges[site]["is_a_site"] = True
 
 
-def parser_data(path):
+def subject_parser(path):
     with open(path, 'r') as fp:
 
         next(fp)  # first line ignored (comment)
@@ -79,4 +79,38 @@ def parser_data(path):
 
         # print(list_edges)
 
-        return number_of_sites, list_sites, safe_node_id, useful_edges, list_edges, last_edge_index
+    return number_of_sites, list_sites, safe_node_id, useful_edges, list_edges, last_edge_index
+
+
+def solution_parser(path):
+    with open(path, 'r') as fp:
+
+        # next(fp)  # first line ignored (comment)
+        line = fp.readline()
+        tab = line.split('\n')
+        subject_filename = "InstancesInt/"+tab[0]+"_I.full"
+
+        number_of_sites, list_sites, safe_node_id, number_of_edges, list_edges, last_edge_index = subject_parser(subject_filename)
+
+        line = fp.readline()
+        tab = line.split(' ')
+        number_of_sites_found = int(tab[0])
+
+        for index in range(number_of_sites_found):
+            line = fp.readline()
+            tab = line.split(' ')
+            site_index = str(tab[0])
+            list_sites[site_index]["evacutation_start_date"] = int(tab[1])
+            list_sites[site_index]["evacutation_rate"] = int(tab[2])
+
+        line = fp.readline()
+        tab = line.split(' ')
+        valid_found = False
+        if str(tab[0]) == "valid":
+            valid_found = True
+
+        line = fp.readline()
+        tab = line.split('\n')
+        evacuation_total_time = str(tab[0])
+
+        return number_of_sites, list_sites, safe_node_id, number_of_edges, list_edges, last_edge_index, valid_found, evacuation_total_time

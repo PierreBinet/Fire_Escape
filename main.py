@@ -11,13 +11,23 @@ import time
 # Starting the "computing time" timer
 start_time = time.time()
 
-# Fetching the file
-path = 'InstancesInt/sparse_10_30_3_10_I.full'
-filename = os.path.basename(path)
 
+# YOU CAN EITHER DIRECTLY FETCH A SUBJECT FILE, OR YOU CAN FETCH A SOLUTION FILE WHICH WILL ASK FOR A SUBJECT
 
+# FIRST WAY: SUBJECT FILE
+# Fetching a subject file
+# path = 'InstancesInt/example.full'
+# filename = os.path.basename(path)
 # Parsing the file
-number_of_sites, list_sites, safe_node_id, number_of_edges, list_edges, last_edge_index = parser.parser_data(path)
+# number_of_sites, list_sites, safe_node_id, number_of_edges, list_edges, last_edge_index = parser.subject_parser(path)
+
+# SECOND WAY: SOLUTION FILE
+# Fetching a solution file
+path = 'solution_to_parse'
+filename = os.path.basename(path)
+# Parsing the file
+number_of_sites, list_sites, safe_node_id, number_of_edges, list_edges, last_edge_index, valid_found, \
+    evacuation_total_time_found = parser.solution_parser(path)
 
 
 # Computing the min capacity of the path from each site
@@ -34,29 +44,20 @@ borne_sup = bornes.find_borne_sup(list_sites, list_edges, safe_node_id)
 
 
 list_original = {}
-# Debug: Creating an arbitrary solution to test
+# Saving the original solution found by the borne sup
 for site in list_sites:
-    # list_sites[site]["evacuation_rate"] = 3
-    # list_sites[site]["evacuation_start_date"] = 52
     list_original[site] = []
     list_original[site].append(list_sites[site]["evacuation_rate"])
     list_original[site].append(list_sites[site]["evacuation_start_date"])
-for edge in list_edges:
-    list_edges[edge]["due_date"] = 37
-
-print("found parent sites: "+str(solution_finder.find_parent_site(193, list_edges, list_sites)))
 
 
 # Finding a solution based on the bornes sup/inf found
-#solution_finder.find_solution(number_of_sites, list_sites, list_edges, last_edge_index, list_original)
+solution_finder.find_solution(number_of_sites, list_sites, list_edges, last_edge_index, list_original)
 
 
 # Checking the validness of a solution
 valid, valid_cap, valid_due_date, evacuation_total_time, list_overcap, list_overdue, list_cap_filling =\
     solution_checker.solution_is_valid(list_sites, list_edges, last_edge_index)
-print("list_overdue: "+str(list_overdue))
-print("list_overcap: "+str(list_overcap))
-print("list_cap_filling: "+str(list_cap_filling))
 
 
 # Ending the "computing time" timer
@@ -81,23 +82,12 @@ else:
     if not valid_due_date:
         print("Solution INVALID because edges were used beyond their due dates")
 print("Solution lower limit: "+str(borne_inf)+" upper limit: "+str(borne_sup))
-print("Evacuation total time : " + str(evacuation_total_time))
+print("Evacuation total time : " + str(evacuation_total_time_found))
 print("Computing time : " + str((end_time - start_time)*1000) + " ms")
 print("Method used : handmade")
 print("Bastien & Pierre\n")
 
 
 # Printing the edges
-for edge in list_edges:
-    print("edge n°%3s: " % edge, "capacity: %3s" % list_edges[edge]["capacity"], str(list_edges[edge]["list_event"]))
-
-
-# total_time = total_time.compute_total_time(list_sites)
-#
-# print("TOTAL TIME : ")
-# print(total_time)
-# list_edges["13"]["checked_?"] = False
-# list_edges["97"]["checked_?"] = False
-# print(solution_checker.edge_checker("13", list_edges))
-# print(solution_checker.edge_checker("97", list_edges))
-
+# for edge in list_edges:
+#     print("edge n°%3s: " % edge, "capacity: %3s" % list_edges[edge]["capacity"], str(list_edges[edge]["list_event"]))
