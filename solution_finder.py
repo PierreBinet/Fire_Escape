@@ -9,7 +9,6 @@ def find_solution(number_of_sites, list_sites, list_edges, last_edge_index, list
 
     valid, valid_cap, _, best_solution_so_far, list_overcap, list_overdue, list_cap_filling\
         = solution_checker.solution_is_valid(list_sites, list_edges, last_edge_index)
-    # print("VALID BEGIN : " + str(valid_cap))
 
     best_solution_so_far = compress_dates(date_blocked_sites, number_of_sites, list_sites, list_edges, last_edge_index, best_solution_so_far)
     decrease_rate_to_start_earlier(list_sites, list_edges, last_edge_index)
