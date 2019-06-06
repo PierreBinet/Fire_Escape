@@ -11,9 +11,11 @@ To watch a demonstration, please add a solution file, in the main directory of t
 The solution file must be named "solution_to_parse" and respect the following patern:
 
 example\
+3\
 1 8 5\
 2 5 2\
 3 3 0\
+valid\
 41\
 0.3\
 example handmade solution\
