@@ -63,7 +63,8 @@ def solution_is_valid(list_sites, list_edges, last_edge_index):
     # second part of the checker:
     # calls the edge checker function which creates the list_event "array" for the remaining edges
     # and check the validity of the returned "array"
-    final_edge_event = edge_checker(str(last_edge_index), list_edges)
+    for index in last_edge_index:
+        edge_checker(str(index), list_edges)
 
     for edge in list_edges:
         max_edge = 0
@@ -85,8 +86,12 @@ def solution_is_valid(list_sites, list_edges, last_edge_index):
     valid = valid_cap and valid_due_date
 
     # computes the the total evacuation time
-    max = len(list_edges[str(last_edge_index)]["list_event"]) + list_edges[str(last_edge_index)]["length"]
+    max_last = 0
+    for index in last_edge_index:
+        current = len(list_edges[str(index)]["list_event"]) + list_edges[str(index)]["length"]
+        if current > max_last:
+            max_last = current
     # print(last_edge_index)
     # print("final edge: "+str(list_edges[str(last_edge_index)]["list_event"]))
 
-    return valid, valid_cap, valid_due_date, max, list_overcap, list_overdue, list_cap_filling
+    return valid, valid_cap, valid_due_date, max_last, list_overcap, list_overdue, list_cap_filling

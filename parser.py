@@ -73,7 +73,7 @@ def subject_parser(path):
             if list_edges[edge]["node_dst"] != safe_node_id:
                 list_edges[str(list_edges[edge]["node_dst"])]["parent"].append(list_edges[edge]["node_src"])
             else:
-                last_edge_index = list_edges[edge]["node_src"]
+                last_edge_index.append(list_edges[edge]["node_src"])
 
         is_a_site(list_edges, list_sites)
 
@@ -88,7 +88,7 @@ def solution_parser(path):
         # next(fp)  # first line ignored (comment)
         line = fp.readline()
         tab = line.split('\n')
-        subject_filename = "InstancesInt/"+tab[0]+"_I.full"
+        subject_filename = "InstancesInt/"+tab[0]+".full"
 
         number_of_sites, list_sites, safe_node_id, number_of_edges, list_edges, last_edge_index = subject_parser(subject_filename)
 
@@ -100,8 +100,8 @@ def solution_parser(path):
             line = fp.readline()
             tab = line.split(' ')
             site_index = str(tab[0])
-            list_sites[site_index]["evacutation_start_date"] = int(tab[1])
-            list_sites[site_index]["evacutation_rate"] = int(tab[2])
+            list_sites[site_index]["evacuation_start_date"] = int(tab[2])
+            list_sites[site_index]["evacuation_rate"] = int(tab[1])
 
         line = fp.readline()
         tab = line.split(' ')
