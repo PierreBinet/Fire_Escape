@@ -1,7 +1,7 @@
 # Fire_Escape
 
 ## Authors
-Pierre Binet
+Pierre Binet\
 Bastien Dufour
 
 ## Content
