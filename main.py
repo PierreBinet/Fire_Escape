@@ -36,23 +36,23 @@ utilities.min_capacities(list_sites, list_edges, safe_node_id)
 
 # Computing the lower and higher limits of the evacuation time
 list_sites = utilities.estimate_sites_evacuation_times(list_sites, list_edges, safe_node_id)
-#
-# sorted_list = utilities.sort_sites_by_evacuation_time(list_sites)
-#
-# borne_inf = bornes.find_borne_inf(list_sites)
-# borne_sup = bornes.find_borne_sup(list_sites, list_edges, safe_node_id)
-#
-#
-# list_original = {}
-# # Saving the original solution found by the borne sup
-# for site in list_sites:
-#     list_original[site] = []
-#     list_original[site].append(list_sites[site]["evacuation_rate"])
-#     list_original[site].append(list_sites[site]["evacuation_start_date"])
+
+sorted_list = utilities.sort_sites_by_evacuation_time(list_sites)
+
+borne_inf = bornes.find_borne_inf(list_sites)
+borne_sup = bornes.find_borne_sup(list_sites, list_edges, safe_node_id)
+
+
+list_original = {}
+# Saving the original solution found by the borne sup
+for site in list_sites:
+    list_original[site] = []
+    list_original[site].append(list_sites[site]["evacuation_rate"])
+    list_original[site].append(list_sites[site]["evacuation_start_date"])
 
 
 # Finding a solution based on the bornes sup/inf found
-# solution_finder.find_solution(number_of_sites, list_sites, list_edges, last_edge_index, list_original)
+solution_finder.find_solution(number_of_sites, list_sites, list_edges, last_edge_index, list_original)
 
 
 # Checking the validness of a solution
@@ -81,7 +81,7 @@ else:
         print("Edges capacities respected")
     if not valid_due_date:
         print("Solution INVALID because edges were used beyond their due dates")
-# print("Solution lower limit: "+str(borne_inf)+" upper limit: "+str(borne_sup))
+print("Solution lower limit: "+str(borne_inf)+" upper limit: "+str(borne_sup))
 print("Evacuation total time : " + str(evacuation_total_time))
 print("Computing time : " + str((end_time - start_time)*1000) + " ms")
 print("Method used : handmade")

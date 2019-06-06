@@ -13,18 +13,12 @@ def edge_checker(edge_index, list_edges):
 
     # this function creates (if it is not already created) the list_event "array" of each edge
     # by adding time-shifted "arrays" of their parent edge(s)
-    # print("edge: "+str(edge_index))
-    # if list_edges[edge_index]["parent"]:
-    #     print("parents: "+str(list_edges[edge_index]["parent"]))
     if not list_edges[edge_index]["checked_?"]:
         if not list_edges[edge_index]["is_a_site"]:
             list_edges[edge_index]["list_event"] = []
         for parent in list_edges[edge_index]["parent"]:
             parent_list_event = edge_checker(str(parent), list_edges)
             length_parent = list_edges[str(parent)]["length"]
-            # print(list_edges[str(parent)]["checked_?"])
-            # print(parent_list_event)
-            # print(len(parent_list_event) + length_parent)
             list_edges[edge_index]["list_event"] = sum_shifted_list(list_edges[edge_index]["list_event"], parent_list_event, length_parent)
 
         list_edges[edge_index]["checked_?"] = True
@@ -91,7 +85,5 @@ def solution_is_valid(list_sites, list_edges, last_edge_index):
         current = len(list_edges[str(index)]["list_event"]) + list_edges[str(index)]["length"]
         if current > max_last:
             max_last = current
-    # print(last_edge_index)
-    # print("final edge: "+str(list_edges[str(last_edge_index)]["list_event"]))
 
     return valid, valid_cap, valid_due_date, max_last, list_overcap, list_overdue, list_cap_filling

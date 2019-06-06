@@ -13,9 +13,6 @@ def subject_parser(path):
         number_of_sites = int(tab[0])
         safe_node_id = int(tab[1])
 
-        # print("number of sites : "+str(number_of_sites))
-        # print("safe node id : "+str(safe_node_id))
-
         list_sites = {}  # creation of a list to put sites in
 
         needed_edges = []
@@ -34,10 +31,6 @@ def subject_parser(path):
                     needed_edges.append(direct_path)
                 last_node = next_node
             list_sites[str(site["id"])] = site
-
-        # print(needed_edges)
-
-        # print(list_sites)
 
         next(fp)  # line ignored (comment)
         line = fp.readline()
@@ -76,8 +69,6 @@ def subject_parser(path):
                 last_edge_index.append(list_edges[edge]["node_src"])
 
         is_a_site(list_edges, list_sites)
-
-        # print(list_edges)
 
     return number_of_sites, list_sites, safe_node_id, useful_edges, list_edges, last_edge_index
 
